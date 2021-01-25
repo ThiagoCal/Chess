@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
+
+    <link rel="stylesheet" href="chess.css">
+
+    <title>Chess!</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><div id="div00" class="piece"><img id="img00" src="chess.png"></div></td>
+            <td><div id="div01" class="piece"><img id="img01" src="chess.png"></div></td>
+            <td><div id="div02" class="piece"><img id="img02" src="chess.png"></div></td>
+            <td><div id="div03" class="piece"><img id="img03" src="chess.png"></div></td>
+            <td><div id="div04" class="piece"><img id="img04" src="chess.png"></div></td>
+            <td><div id="div05" class="piece"><img id="img05" src="chess.png"></div></td>
+            <td><div id="div06" class="piece"><img id="img06" src="chess.png"></div></td>
+            <td><div id="div07" class="piece"><img id="img07" src="chess.png"></div></td>
+        </tr>
+        <tr>
+            <td><div id="div10" class="piece"><img id="img10" src="chess.png"></div></td>
+            <td><div id="div11" class="piece"><img id="img11" src="chess.png"></div></td>
+            <td><div id="div12" class="piece"><img id="img12" src="chess.png"></div></td>
+            <td><div id="div13" class="piece"><img id="img13" src="chess.png"></div></td>
+            <td><div id="div14" class="piece"><img id="img14" src="chess.png"></div></td>
+            <td><div id="div15" class="piece"><img id="img15" src="chess.png"></div></td>
+            <td><div id="div16" class="piece"><img id="img16" src="chess.png"></div></td>
+            <td><div id="div17" class="piece"><img id="img17" src="chess.png"></div></td>
+
+        </tr>
+        <tr>
+            <td><div id="div20" class="piece"><img id="img20" src="chess.png"></div></td>
+            <td><div id="div21" class="piece"><img id="img21" src="chess.png"></div></td>
+            <td><div id="div22" class="piece"><img id="img22" src="chess.png"></div></td>
+            <td><div id="div23" class="piece"><img id="img23" src="chess.png"></div></td>
+            <td><div id="div24" class="piece"><img id="img24" src="chess.png"></div></td>
+            <td><div id="div25" class="piece"><img id="img25" src="chess.png"></div></td>
+            <td><div id="div26" class="piece"><img id="img26" src="chess.png"></div></td>
+            <td><div id="div27" class="piece"><img id="img27" src="chess.png"></div></td>
+        </tr>
+        <tr>
+            <td><div id="div30" class="piece"><img id="img30" src="chess.png"></div></td>
+            <td><div id="div31" class="piece"><img id="img31" src="chess.png"></div></td>
+            <td><div id="div32" class="piece"><img id="img32" src="chess.png"></div></td>
+            <td><div id="div33" class="piece"><img id="img33" src="chess.png"></div></td>
+            <td><div id="div34" class="piece"><img id="img34" src="chess.png"></div></td>
+            <td><div id="div35" class="piece"><img id="img35" src="chess.png"></div></td>
+            <td><div id="div36" class="piece"><img id="img36" src="chess.png"></div></td>
+            <td><div id="div37" class="piece"><img id="img37" src="chess.png"></div></td>
+        <tr>
+            <td><div id="div40" class="piece"><img id="img40" src="chess.png"></div></td>
+            <td><div id="div41" class="piece"><img id="img41" src="chess.png"></div></td>
+            <td><div id="div42" class="piece"><img id="img42" src="chess.png"></div></td>
+            <td><div id="div43" class="piece"><img id="img43" src="chess.png"></div></td>
+            <td><div id="div44" class="piece"><img id="img44" src="chess.png"></div></td>
+            <td><div id="div45" class="piece"><img id="img45" src="chess.png"></div></td>
+            <td><div id="div46" class="piece"><img id="img46" src="chess.png"></div></td>
+            <td><div id="div47" class="piece"><img id="img47" src="chess.png"></div></td>
+        </tr>
+        <tr>
+            <td><div id="div50" class="piece"><img id="img50" src="chess.png"></div></td>
+            <td><div id="div51" class="piece"><img id="img51" src="chess.png"></div></td>
+            <td><div id="div52" class="piece"><img id="img52" src="chess.png"></div></td>
+            <td><div id="div53" class="piece"><img id="img53" src="chess.png"></div></td>
+            <td><div id="div54" class="piece"><img id="img54" src="chess.png"></div></td>
+            <td><div id="div55" class="piece"><img id="img55" src="chess.png"></div></td>
+            <td><div id="div56" class="piece"><img id="img56" src="chess.png"></div></td>
+            <td><div id="div57" class="piece"><img id="img57" src="chess.png"></div></td>
+        </tr>
+        <tr>
+            <td><div id="div60" class="piece"><img id="img60" src="chess.png"></div></td>
+            <td><div id="div61" class="piece"><img id="img61" src="chess.png"></div></td>
+            <td><div id="div62" class="piece"><img id="img62" src="chess.png"></div></td>
+            <td><div id="div63" class="piece"><img id="img63" src="chess.png"></div></td>
+            <td><div id="div64" class="piece"><img id="img64" src="chess.png"></div></td>
+            <td><div id="div65" class="piece"><img id="img65" src="chess.png"></div></td>
+            <td><div id="div66" class="piece"><img id="img66" src="chess.png"></div></td>
+            <td><div id="div67" class="piece"><img id="img67" src="chess.png"></div></td>
+        </tr>
+        <tr>
+            <td><div id="div70" class="piece"><img id="img70" src="chess.png"></div></td>
+            <td><div id="div71" class="piece"><img id="img71" src="chess.png"></div></td>
+            <td><div id="div72" class="piece"><img id="img72" src="chess.png"></div></td>
+            <td><div id="div73" class="piece"><img id="img73" src="chess.png"></div></td>
+            <td><div id="div74" class="piece"><img id="img74" src="chess.png"></div></td>
+            <td><div id="div75" class="piece"><img id="img75" src="chess.png"></div></td>
+            <td><div id="div76" class="piece"><img id="img76" src="chess.png"></div></td>
+            <td><div id="div77" class="piece"><img id="img77" src="chess.png"></div></td>
+        </tr>
+    </table>
+</body>
+</html>
