@@ -5,14 +5,14 @@ let boardSize = 8;
 let B = new Board(boardSize); // board do modelo
 
 let board = [
-    ["blackknight", "blackknight", "blackknight", "blackknight", "blackknight","blackknight", "blackknight", "blackknight"],
-    ["blackpawn", "blackpawn", "blackpawn", "blackpawn", "blackpawn","blackpawn", "blackpawn", "blackpawn"],
-    ["empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"   ],
-    ["empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"   ],
-    ["empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"   ],
-    ["empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"    , "empty"   ],
-    ["whitepawn", "whitepawn", "whitepawn", "whitepawn", "whitepawn", "whitepawn", "whitepawn", "whitepawn"],
-    ["whiteknight", "whiteknight", "whiteknight", "whiteknight", "whiteknight", "whiteknight", "whiteknight", "whiteknight"],
+    ["blackrook", "blackknight", "blackbishop", "blackqueen", "blackking", "blackbishop", "blackknight", "blackrook"],
+    ["blackpawn", "blackpawn"  , "blackpawn"  , "blackpawn" , "blackpawn", "blackpawn"  , "blackpawn"  , "blackpawn"],
+    ["empty"    , "empty"      , "empty"      , "empty"     , "empty"    , "empty"      , "empty"      , "empty"    ],
+    ["empty"    , "empty"      , "empty"      , "empty"     , "empty"    , "empty"      , "empty"      , "empty"    ],
+    ["empty"    , "empty"      , "empty"      , "empty"     , "empty"    , "empty"      , "empty"      , "empty"    ],
+    ["empty"    , "empty"      , "empty"      , "empty"     , "empty"    , "empty"      , "empty"      , "empty"    ],
+    ["whitepawn", "whitepawn"  , "whitepawn"  , "whitepawn" , "whitepawn", "whitepawn"  , "whitepawn"  , "whitepawn"],
+    ["whiterook", "whiteknight", "whitebishop", "whitequeen", "whiteking", "whitebishop", "whiteknight", "whiterook"],
 ];
 
 let selected = undefined;
@@ -33,9 +33,9 @@ class P { // position
             this.highlight(false);
             selected = undefined;
         } else {
-            console.log("moved", selected.toString(), "to", this.toString());
+            console.log("trying to move", selected.toString(), "to", this.toString());
 
-            let ok = B.move(selected.i, selected.j, this.i , this.j)
+            let ok = B.move(selected.i, selected.j, this.i, this.j);
 
             if (ok === true) {
                 this.img.attr("src", selected.class +".png");
