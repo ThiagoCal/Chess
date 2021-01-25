@@ -91,19 +91,41 @@ class Board{
     
     }
 
-    /* bishop_move(i0, j0, i, j) {
-        
-        var b;
-        b = this.board[i][j] * this.board[i0][j0];
-        if (b > 0){
-            return false
-        }
-        var dy = Math.abs(i -i0);
-        var dx = Math.abs(j - j0);
-        if (dx===1 && dy===1){
-            
-        }
-         */
+     bishop_move(i0, j0, i, j) {
+		
+		let dx = Math.abs(j - j0);
+		let dy = Math.abs(i - i0);
+
+		if(dx !== dy){  //caminho inválido - não forma 45 graus
+			return false;
+		}
+		
+		let ux = (j > j0) ? 1 : -1;  //andando para no eixo x
+		let uy; 	//andando no eixo y
+		if(i > i0) {  
+			uy = -1;
+		} 
+		else {
+			uy = 1;
+		}
+		
+		let x = i0 + ux;
+		let y = j0 + uy;
+
+		while(x !== i && y !== j){//checagem do caminho até o final
+			console.log(x, y);
+			console.log(ux, uy);
+			if(!this.empty(x,y)){
+				return false;
+			}
+			x += ux; //incrementa uma casa
+			y += uy; //incrementa uma casa
+		}
+
+		return (this.board[i][j]*this.board[i0][j0] <= 0);	
+
+	 }
+       
 
     move(i0, j0, i, j) {
         if(!this.inside(i0,j0) || !this.inside(i,j)){
@@ -120,7 +142,10 @@ class Board{
             break;
         case 2:
             ok = this.knight_move(i0, j0, i, j);
-            break;
+			break;
+		case 3:
+			ok = this.bishop_move(i0, j0, i, j);
+			break;
         default:
             return "Não implementado";
         }
