@@ -74,11 +74,8 @@ class Board{
     //movimentação cavalo 
 
     knight_move(i0, j0, i, j) {
-        var x;
-        x = this.board[i][j] * this.board[i0][j0];
-        if (x > 0){
-            return false // peça da mesma cor. invalida movimento
-        }
+       
+        
         var dy = Math.abs(i -i0);
         var dx = Math.abs(j - j0);
         if (dx===2 && dy===1){
@@ -100,36 +97,103 @@ class Board{
 			return false;
 		}
 		
-		let ux = (j > j0) ? 1 : -1;  //andando para no eixo x
+		let ux;
+		if(j > j0){
+			ux = 1 
+		 }
+		 else{ 
+			 ux = -1;
+		 }  //andando para no eixo x
 		let uy; 	//andando no eixo y
 		if(i > i0) {  
-			uy = -1;
+			uy = 1;
 		} 
 		else {
-			uy = 1;
+			uy = -1;
 		}
 		
-		let x = i0 + ux;
-		let y = j0 + uy;
+		let x = j0 + ux;
+		let y = i0 + uy;
 
-		while(x !== i && y !== j){//checagem do caminho até o final
+		while(x !== j && y !== i){//checagem do caminho até o final
 			console.log(x, y);
 			console.log(ux, uy);
-			if(!this.empty(x,y)){
+			if(!this.empty(y, x)){
 				return false;
 			}
 			x += ux; //incrementa uma casa
 			y += uy; //incrementa uma casa
 		}
 
-		return (this.board[i][j]*this.board[i0][j0] <= 0);	
+		return true;	
 
 	 }
        
+	 tower_move(i0, j0, i, j) {
+
+        let dx = Math.abs(j - j0);
+		let dy = Math.abs(i - i0);
+
+		if((dx === 0 && dy === 0) || (dx !== 0 && dy !== 0)){  //caminho inválido 
+			return false;
+        }
+        
+        let tx;
+		if(j > j0){
+			tx = 1;
+		}
+		else if(j < j0){ 
+             tx = -1;
+        }
+        else {
+            tx = 0;
+        }
+           //andando para no eixo x
+		let ty; 	//andando no eixo y
+		if(i > i0) {  
+			ty = 1;
+		} 
+        else if(i < i0){ 
+            ty = -1;
+        }
+        else{
+           ty = 0;
+        }
+               
+        let x = j0 + tx;
+		let y = i0 + ty;
+        console.log(x, y);
+        console.log(tx, ty)
+        console.log(x, y);
+        console.log(j, i);
+		while( ( x !== j && y === i) || ( x === j && y !== i)){//checagem do caminho até o final
+			
+			console.log(tx, ty);
+			if(!this.empty(y, x)){
+				return false;
+			}
+			x += tx; //incrementa uma casa
+			y += ty; //incrementa uma casa
+		}
+
+		return true;
+
+     }
+
+    king_move(i0, j0, i, j) {
+        let dx = Math.abs(j - j0);
+        let dy = Math.abs(i - i0);
+
+       return dx <= 1 && dy <= 1;
+    }
+
 
     move(i0, j0, i, j) {
         if(!this.inside(i0,j0) || !this.inside(i,j)){
             return "Fora do tabuleiro";
+        }
+        if(this.board[i][j]*this.board[i0][j0] > 0){
+            return "Peças da mesma cor";
         }
         var piece = Math.abs(this.board[i0][j0]);
         var ok;
@@ -145,16 +209,57 @@ class Board{
 			break;
 		case 3:
 			ok = this.bishop_move(i0, j0, i, j);
-			break;
+            break;
+        case 4:
+            ok = this.tower_move(i0, j0, i, j);
+            break;
+        case 5:
+            ok = this.tower_move(i0, j0, i, j) || this.bishop_move(i0, j0, i, j);
+            break;
+        case 6:
+            ok = this.king_move(i0, j0, i, j);
+            break;
         default:
-            return "Não implementado";
+            return "Erro do programa";
         }
 
         if (ok) {
+            let piece0 = this.board[i0][j0];
+            let piece1 = this.board[i][j]; 
             this.board[i][j] = this.board[i0][j0];
-            this.board[i0][j0] = 0;
+            this.board[i0][j0] = 0; //deixa a casa anterior da peça vazia
+            if(this.check(piece0)){
+                this.board[i][j] = piece1;
+                this.board[i0][j0] = piece0;
+               return "Rei em check";
+            }
             return true;
         }
         return "Movimento inválido";
+    }
+
+    getKing(color) {
+        for (let i = 0; i < this.boardSize; i++) {
+            for (let j = 0; j < this.boardSize; j++) {
+                let piece = this.board[i][j];
+                if (Math.abs(piece) == 6 && piece * color > 0) { // se é um rei e se é da mesma cor
+                    return {i: i, j: j};
+                }
+            }
+        }
+    }
+    
+    check(color) {
+        let kingPosition = this.getKing(color);
+        for (let i = 0; i < this.boardSize; i++) {
+            for (let j = 0; j < this.boardSize; j++) {
+                if (color * this.board[i][j] < 0) { // se é uma peça inimiga
+                    if (this.move(i, j, kingPosition.i, kingPosition.j) === true) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
