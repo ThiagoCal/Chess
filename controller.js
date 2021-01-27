@@ -46,10 +46,9 @@ class P { // position
                 board[selected.i][selected.j] = "empty";
                 selected = undefined;
             } else {
-                
                 selected.highlight(false);
                 selected = undefined;
-                console.log("JOGADA ILEGAL", ok);
+                console.log("JOGADA ILEGAL:", ok);
             }
         }
     }
