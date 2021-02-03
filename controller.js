@@ -52,7 +52,10 @@ class P { // position
                 board[selected.i][selected.j] = "empty";
                 selected = undefined;
                 let enemyColor = -B.board[this.i][this.j];
-                if(B.isCheck(enemyColor)){
+                if(B.checkMate(enemyColor)){
+                    $("#status").html("CHECKMATE!");
+                }
+                else if(B.isCheck(enemyColor)){
                     $("#status").html("CHECK!");
                 }
                 else{

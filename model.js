@@ -264,6 +264,36 @@ class Board{
         return isCheck;
     }
 
+    avoidCheck(i0, j0) {
+        for (let i = 0; i < this.n; i++) {
+            for (let j = 0; j < this.n; j++) {
+                if (this.canMove(i0, j0, i, j)) {
+                    if (!this.check(i0, j0, i, j)) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    
+    checkMate(color) {
+        if (!this.isCheck(color)) { //referencia no modelo a (enemycolor)
+            return false
+        }
+        for (let i = 0; i < this.n; i++) {
+            for (let j = 0; j < this.n; j++) {
+                if (this.board[i][j] * color > 0) {
+                    if (this.avoidCheck(i, j)) {
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
+
     move(i0, j0, i, j) {
 
         //Separação de turnos
