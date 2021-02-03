@@ -17,6 +17,8 @@ let board = [
 
 let selected = undefined;
 
+let $status = $('#status');
+
 class P { // position
     constructor(i, j) {
         this.i = i;
@@ -28,12 +30,16 @@ class P { // position
             console.log("selected", this.toString());
             this.highlight(true);
             selected = this;
+            $("#status").html("");
         } else if (this.equals(selected)) {
             console.log("deselected", this.toString());
             this.highlight(false);
             selected = undefined;
+            $("#status").html("");
         } else {
-            console.log("trying to move", selected.toString(), "to", this.toString());
+
+            let log = "Trying to move " + selected.toString() + " to "+ this.toString();
+            console.log(log);
 
             let ok = B.move(selected.i, selected.j, this.i, this.j);
 
@@ -45,12 +51,22 @@ class P { // position
                 board[this.i][this.j] = board[selected.i][selected.j];
                 board[selected.i][selected.j] = "empty";
                 selected = undefined;
+                let enemyColor = -B.board[this.i][this.j];
+                if(B.isCheck(enemyColor)){
+                    $("#status").html("CHECK!");
+                }
+                else{
+                    $("#status").html("");
+                };
             } else {
                 selected.highlight(false);
                 selected = undefined;
-                console.log("JOGADA ILEGAL:", ok);
+                let message = "JOGADA ILEGAL: " + ok;
+                console.log(message);
+                $("#status").html(log + "<br>" + message);
             }
         }
+        
     }
 
     equals(p) {
@@ -89,5 +105,6 @@ function init() {
         }
     }
 }
+
 
 $(document).ready(init);

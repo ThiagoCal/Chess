@@ -2,6 +2,7 @@
 class Board{
     constructor(n){
         this.n = n
+        this.countTurns = 0;
         if(n === 8){
             this.board = [
                 [-4, -2, -3, -5, -6, -3, -2, -4],
@@ -184,22 +185,27 @@ class Board{
         case 0: 
             return "Casa de origem vazia";
         case 1:
-            console.log("Selecionou um peão");
+            
             ok = this.pawn_move(i0, j0, i, j);
             break;
         case 2:
+            
             ok = this.knight_move(i0, j0, i, j);
             break;
         case 3:
+            
             ok = this.bishop_move(i0, j0, i, j);
             break;
         case 4:
+           
             ok = this.tower_move(i0, j0, i, j);
             break;
         case 5:
+           
             ok = this.tower_move(i0, j0, i, j) || this.bishop_move(i0, j0, i, j);
             break;
         case 6:
+           
             ok = this.king_move(i0, j0, i, j);
             break;
         default:
@@ -225,34 +231,48 @@ class Board{
             }
         }
     }
-    
-    check(i0, j0, i1, j1) {
-        let piece0 = this.board[i0][j0];
-        let piece1 = this.board[i1][j1];
-        this.board[i1][j1] = this.board[i0][j0];
-        this.board[i0][j0] = 0; //deixa a casa anterior da peça vazia
-
-        let color = piece0;
+    isCheck(color){
+       
         let kingPosition = this.getKing(color);
 
         for (let i = 0; i < this.n; i++) {
             for (let j = 0; j < this.n; j++) {
                 if (color * this.board[i][j] < 0) { // se é uma peça inimiga
                     if (this.canMove(i, j, kingPosition.i, kingPosition.j) === true) {
-                        this.board[i0][j0] = piece0;
-                        this.board[i1][j1] = piece1;
                         return true;
                     }
                 }
             }
-        }
+        } 
+        return false; 
+    }
+
+
+    check(i0, j0, i1, j1) {
+        let piece0 = this.board[i0][j0];
+        let piece1 = this.board[i1][j1];
+        this.board[i1][j1] = this.board[i0][j0];
+        this.board[i0][j0] = 0; //deixa a casa anterior da peça vazia
+        
+        let color = piece0;
+        let isCheck = this.isCheck(color);
+        
 
         this.board[i0][j0] = piece0;
         this.board[i1][j1] = piece1;
-        return false;
+        
+        return isCheck;
     }
 
     move(i0, j0, i, j) {
+
+        //Separação de turnos
+        if( this.countTurns % 2 === 0 && this.board[i0][j0] < 0){
+            return "Turno das brancas";
+        }
+        if(this.countTurns % 2 !== 0 && this.board[i0][j0] > 0){
+            return "Turno das pretas";
+        }
         let result = this.canMove(i0, j0, i, j);
         if (result !== true) {
             return result;
@@ -260,8 +280,12 @@ class Board{
         if (this.check(i0, j0, i, j)) {
             return "Rei em xeque";
         }
+        
         this.board[i][j] = this.board[i0][j0];
         this.board[i0][j0] = 0;
+        this.countTurns++
         return true;
     }
+
+    
 }
